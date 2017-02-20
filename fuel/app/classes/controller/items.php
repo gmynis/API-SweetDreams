@@ -78,7 +78,7 @@ class Controller_Items extends Controller_Base
         		try
         		{
         			$item->save();
-        			return $this->notice($code = 'SUCCESSFUL ACTION', $message = 'ITEM.');
+        			return $this->notice($code = 'SUCCESSFUL ACTION', $message = 'ITEM CREATED.');
         		}
         		catch(exception $e)
         		{
@@ -87,7 +87,100 @@ class Controller_Items extends Controller_Base
         	}
     }
 
+
+    //FUNCION PARA BORRAR ITEMS POR ID (PARAMETROS REQUERIDOS: ID)---------------------------------------------------
+
+public function post_delete($id = null)
+    {
+        try
+        {
+            if($id != null)
+            {
+                if($this->check())
+                {
+                    $item = new Model_Items();
+                    $item = Model_Items::find('all', array('where' => array(array('id', $id),)));
+            
+                        foreach ($item as $key)
+                        {
+                            $key -> delete();
+                            return $this->notice($code = 'SUCCESSFUL ACTION', $message = 'ITEM DELETED.');
+                        }
+
+                    if (!empty($item))
+                    {
+                        return $item;
+                    }
+                    else return $this->notice($code = 'ERROR', $message = 'ITEM NOT FOUND OR DOES NOT EXIST.');
+                }
+                else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
+            }
+            else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_ITEM IN URL.');
+        }
+        catch(exception $e)
+        {
+            return $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
+        }
+    }
+
+///FUNCION EDITAR ITEMS POR ID (PARAMETROS REQUERIDOS: ID, NAME, DESCRIPTION, PRIZE AND IMAGE)---------------------------------
+
+    public function post_update($id = null)
+    {
+        //try
+        //{
+            if($id != null)
+            {
+                if($this->check())
+                {
+                    $item = new Model_Items();
+                    $item = Model_Items::find('all', array('where' => array(array('id', $id),)));
+
+                    $name = Input::post('name');
+                    $prize = Input::post('prize');
+                    $description = Input::post('description');
+                    $image = Input::post('image');
+
+                    $checkDescription = Model_Items::find('all', array('where' => array(array('description',$description),)));
+
+                    if (!empty($item))
+                    {
+                        if (isset($description) or isset($prize) or isset($name) or isset($image))
+                        {
+                            if (empty($checkDescription))
+                            {
+                                foreach ($item as $key) 
+                                {
+                                    if ($key['id'] == $id )
+                                    {
+                                        if (isset($name)){ $key->name = $name; }
+                                        if (isset($prize)){ $key->prize = $prize; }
+                                        if (isset($description)){ $key->description = $description; }
+                                        if (isset($image)){ $key->image = $image; }
+                                        $key->save();
+                                    }
+                                    
+                                }
+                                return $this->notice($code = 'SUCCESSFUL ACTION', $message = 'ITEM UPDATED.');
+                            }
+                            else return $this->notice($code = 'ERROR', $message = 'THE DESCRIPTION ENTERED IS CURRENTY IN USE.');
+                        }
+                        else return $this->notice($code = 'ERROR', $message = 'YOU NEED AT LEAST ENTER ONE PARAMETER TO UPDATE THE DATA.');
+                    }
+                    else return $this->notice($code = 'ERROR', $message = 'ITEM NOT FOUND OR DOES NOT EXIST.');
+                }
+                else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
+            }
+            else return $this->notice($code = 'ERROR', $message = 'EXPECTED PARAMETER IN URL.');
+        }
+        //catch(exception $e)
+        //{
+         //   return  $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
+        //}
 }
+
+
+
 
 
 
