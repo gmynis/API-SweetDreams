@@ -98,6 +98,34 @@ class Controller_Users extends Controller_Base
 		}
 	}
 
+	//FUNCION BUSCAR USUARIO POR NOMBRE (PARAMETROS NECESARIOS: USERNAME)----------------------------------------------------------------------
+
+	public function get_username ($username = null)
+	{
+		try
+		{
+			if ($username != null)
+			{
+				if ($this->check()) 
+				{
+					$user = Model_Users::find ('all', array('where' => array(array('username', $username),)));
+
+					if (!empty($user))
+					{
+						return $user;
+					}
+					else return $this->notice($code = 'ERROR', $message = 'USER NOT FOUND OR DOES NOT EXIST.');
+				}
+				else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
+			}
+			else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_USER IN URL.');
+		}
+		catch(exception $e)
+		{
+			return  $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
+		}
+	}
+
 //FUNCION EDITAR USUARIO POR ID (PARAMETROS REQUERIDOS: ID, USERNAME, PASSWORD, EMAIL AND IMAGE)---------------------------------
 
 	public function post_update($id = null)
@@ -216,6 +244,8 @@ class Controller_Users extends Controller_Base
 		}
 	}
 
+
+
 //FUNCION CREAR USUARIO. (PARAMETROS REQUERIDOS: EMAIL AND PASSWORD)-------------------------------------------------------------
 
 	public function post_create()
@@ -268,8 +298,8 @@ class Controller_Users extends Controller_Base
 
 	public function post_buy($id_user = null, $id_item = null)
 	{
-		try
-		{
+		//try
+		//{
 			if($id_user != null)
 			{
 				if($id_item != null)
@@ -302,10 +332,10 @@ class Controller_Users extends Controller_Base
 			}
 			else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_USER IN URL.');
 		}
-		catch(exception $e)
-		{
-			return  $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
-		}
+		//catch(exception $e)
+		//{
+		//	return  $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
+		//}
 	}
 
 //FUNCION MOSTRAR ITEMS DE USUARIOS (PARAMETROS REQUERIDOS: TOKEN)---------------------------------------------------------------
@@ -323,7 +353,7 @@ class Controller_Users extends Controller_Base
 
 	 			$relui = Model_RelUsersItems::find('all');
 
-				return $relui;
+				return $relui,;
 	 			
 	 		}
 	 		else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
