@@ -52,6 +52,35 @@ class Controller_Items extends Controller_Base
         }
     }
 
+
+        //FUNCION BUSCAR ITEM POR NOMBRE (PARAMETROS NECESARIOS: NAME)----------------------------------------------------------------------
+
+    public function get_itemname ($itemname = null)
+    {
+        try
+        {
+            if ($itemname != null)
+            {
+                if ($this->check()) 
+                {
+                    $item = Model_Items::find ('all', array('where' => array(array('name', $itemname),)));
+
+                    if (!empty($item))
+                    {
+                        return $item;
+                    }
+                    else return $this->notice($code = 'ERROR', $message = 'USER NOT FOUND OR DOES NOT EXIST.');
+                }
+                else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
+            }
+            else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_USER IN URL.');
+        }
+        catch(exception $e)
+        {
+            return  $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
+        }
+    }
+
 //FUNCION CREAR ITEM (PARAMETROS REQUERIDOS: NAME, DESCRIPTION, PRIZE AND IMAGE)---------------------------------------------
 
     public function post_create()
