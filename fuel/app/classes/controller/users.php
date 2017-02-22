@@ -336,42 +336,42 @@ class Controller_Users extends Controller_Base
 		//{
 		//	return  $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
 		//}
-	}
+	
 
 //FUNCION MOSTRAR ITEMS DE USUARIOS (PARAMETROS REQUERIDOS: TOKEN)---------------------------------------------------------------
 
-	 public function get_usersitems()
-	 {
+//public function get_usersitems()
+//	 {
 	 	
-	 		if($this->check())
-	 		{
-	 			$user = Model_Users::find('all');
-	 			$user = Model_Users::find('all', array('where' => array(array('id', $id_users))));
+//	 		if($this->check())
+//	 		{
+//	 			$user = Model_Users::find('all');
+//	 			$user = Model_Users::find('all', array('where' => array(array('id', $id_users))));
 
-	 			$item = Model_Items::find('all');
-	 			$item = Model_Items::find('all', array('where' => array(array('id', $id_items))));
+//	 			$item = Model_Items::find('all');
+//	 			$item = Model_Items::find('all', array('where' => array(array('id', $id_items))));
 
-	 			$relui = Model_RelUsersItems::find('all');
+//	 			$relui = Model_RelUsersItems::find('all');
 
-				return $relui,;
+//				return $relui,;
 	 			
-	 		}
-	 		else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
+//	 		}
+//	 		else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
 	 	
-	 }
+//	 }
 
 //FUNCION MOSTRAR ITEMS DE UN UNICO USUARIO (PARAMETROS REQUERIDOS: ID)----------------------------------------------------------
 
 	public function get_items($id_user = null)
 	{
-	 try{
+	 //try{
 
 			if($id_user != null)
 			{
 				if($this->check())
 				{
-					$user = new Model_Users();
-					$user = Model_Users::find('all', array('where' => array(array('id', $id_user))));
+					// $user = new Model_Users();
+					// $user = Model_Users::find('all', array('where' => array(array('id', $id_user))));
 
 					$item = new Model_Items();
 					$item = Model_Items::find('all');
@@ -379,84 +379,40 @@ class Controller_Users extends Controller_Base
 					$relui = new Model_RelUsersItems();
 					$relui = Model_RelUsersItems::find('all', array('where' => array(array('fk_users', $id_user))));
 
-					if (!empty($user))
+					if (!empty($id_user))
 					{
-						if(!empty($item))
+						//print ("hola");
+
+						if($item != null)
 						{
+								//print ("hola1");
+
 							foreach ($relui as $key)
 							{
+
 								if ($key['fk_users'] == $id_user)
 								{
-									return
-									[
-										$key->fk_items = $item
-									];
-								}
+									
+
+									return $relui;
+								}	
 							}
+							return $this->notice($code = 'ERROR', $message = 'THIS USER DO NOT HAVE ASOCIATED ITEMS.');
 						}
-						else return $this->notice($code = 'ERROR', $message = 'THIS USER DO NOT HAVE ITEMS.');
+						else return $this->notice($code = 'ERROR', $message = 'ITEMS NOT FOUND OR DOES NOT EXIST.');
 					}
 					else return $this->notice($code = 'ERROR', $message = 'USER NOT FOUND OR DOES NOT EXIST.');
 				}
 				else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
 			}
 			else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_USER IN URL.');
-		}
-	   catch(exception $e)
-		{
-			return  $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
-		}
-		
+		//}
+	  // catch(exception $e)
+		//{
+			//return  $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
+		//}
 	}
+
 }
-
 //FIN DE CLASE-------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

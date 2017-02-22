@@ -8,8 +8,8 @@ protected static $_primary_key = array('fk_users', 'fk_items');
 protected static $_properties = array(
         'fk_users',
         'fk_items',
-        'unidades' => array(
-            'data_type' => 'int'
-        )
+        //'unidades' => array(
+         //   'data_type' => 'int'
+        //)
     );
 }
