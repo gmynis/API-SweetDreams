@@ -294,49 +294,6 @@ class Controller_Users extends Controller_Base
         else return $this->notice($code = 'ERROR', $message = 'REQUIRE EMAIL AND PASSWORD.');
     }
 
-//FUNCION COMPRAR ITEMS (PARAMETROS REQUERIDOS: TOKEN)---------------------------------------------------------------------------
-
-	public function post_buy($id_user, $id_item)
-	{
-		//try
-		//{
-			if($id_user != null)
-			{
-				if($id_item != null)
-				{
-					if($this->check())
-					{
-						$user = new Model_Users();
-						$user = Model_Users::find('all', array('where' => array(array('id', $id_user),)));
-
-						$item = new Model_Items();
-						$item = Model_Items::find('all', array('where' => array(array('id', $id_item),)));
-
-						if (!empty($user))
-						{
-							if(!empty($item))
-							{
-								$relui = new Model_RelUsersItems();
-								$relui->fk_users = $user->id;
-								$relui->fk_items = $item->id;
-								$relui->save();
-								return $this->notice($code = 'SUCCESSFUL ACTION', $message = 'ITEM BUYED.');	
-							}
-							else return $this->notice($code = 'ERROR', $message = 'ITEM NOT FOUND OR DOES NOT EXIST.');	
-						}
-						else return $this->notice($code = 'ERROR', $message = 'USER NOT FOUND OR DOES NOT EXIST.');
-					}
-					else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
-				}
-				else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_ITEM IN URL.');
-			}
-			else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_USER IN URL.');
-		}
-		//catch(exception $e)
-		//{
-		//	return  $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
-		//}
-	
 
 //FUNCION MOSTRAR ITEMS DE USUARIOS (PARAMETROS REQUERIDOS: TOKEN)---------------------------------------------------------------
 
