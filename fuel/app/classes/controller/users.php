@@ -296,7 +296,7 @@ class Controller_Users extends Controller_Base
 
 //FUNCION COMPRAR ITEMS (PARAMETROS REQUERIDOS: TOKEN)---------------------------------------------------------------------------
 
-	public function post_buy($id_user = null, $id_item = null)
+	public function post_buy($id_user, $id_item)
 	{
 		//try
 		//{
@@ -340,7 +340,6 @@ class Controller_Users extends Controller_Base
 
 //FUNCION MOSTRAR ITEMS DE USUARIOS (PARAMETROS REQUERIDOS: TOKEN)---------------------------------------------------------------
 
-<<<<<<< Updated upstream
 //public function get_usersitems()
 //	 {
 	 	
@@ -360,36 +359,13 @@ class Controller_Users extends Controller_Base
 //	 		else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
 	 	
 //	 }
-=======
-	// public function get_usersItems()
-	// {
-	 	
-	 	//	if($this->check())
-	 		//{
-	 			//$user = Model_Users::find('all');
-	 			//$user = Model_Users::find('all', array('where' => array(array('id', $id_users))));
 
-	 			//$item = Model_Items::find('all');
-	 			//$item = Model_Items::find('all', array('where' => array(array('id', $id_items))));
-
-	 			//$relui = Model_RelUsersItems::find('all');
-
-				//return $relui;
-	 			
-	 		//}
-	 		//else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
-	 	
-	 //}
->>>>>>> Stashed changes
 
 //FUNCION MOSTRAR ITEMS DE UN UNICO USUARIO (PARAMETROS REQUERIDOS: ID)----------------------------------------------------------
 
-	public function get_userItems($id_user = null)
+	public function get_userItems($id_user)
 	{
-<<<<<<< Updated upstream
-	 //try{
-=======
->>>>>>> Stashed changes
+
 
 			if($id_user != null)
 			{
@@ -404,6 +380,7 @@ class Controller_Users extends Controller_Base
 					$relui = new Model_RelUsersItems();
 					$relui = Model_RelUsersItems::find('all', array('where' => array(array('fk_users', $id_user))));
 
+
 					if (!empty($id_user))
 					{
 						//print ("hola");
@@ -417,18 +394,11 @@ class Controller_Users extends Controller_Base
 
 								if ($key['fk_users'] == $id_user)
 								{
-<<<<<<< Updated upstream
 									
 
-									return $relui;
-								}	
-=======
-									return
-									[
-										$key->fk_users = $user
-									];
+									return $relui;	
 								}
->>>>>>> Stashed changes
+
 							}
 							return $this->notice($code = 'ERROR', $message = 'THIS USER DO NOT HAVE ASOCIATED ITEMS.');
 						}
@@ -439,69 +409,7 @@ class Controller_Users extends Controller_Base
 				else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
 			}
 			else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_USER IN URL.');
-<<<<<<< Updated upstream
-		//}
-	  // catch(exception $e)
-		//{
-			//return  $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
-		//}
-	}
-=======
-		}
-}
->>>>>>> Stashed changes
 
 }
-//FIN DE CLASE-------------------------------------------------------------------------------------------------------------------
-
-<<<<<<< Updated upstream
-=======
-
-
-
-
-
-
+}
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> Stashed changes
