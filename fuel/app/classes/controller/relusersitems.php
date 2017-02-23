@@ -37,43 +37,53 @@ public function post_buy()
         		}
         	}
         }
-  
-     // FUNCION BORRAR UNA COMPRA (PARAMETROS REQUERIDOS: FK_USER y FK_ITEM)----------------------------------------------------------------------
 
-	// public function post_delete($fk_users, $fk_items)
-	// {
-	// 	try
-	// 	{
-	// 		if($fk_items != null)
-	// 			{
-	// 				if($fk_users != null)
-	// 				{
 
-	// 					if($this->check())
-	// 					{
-	// 					$rel_users_items = new Model_Relusersitems();
-	// 					$fk_users = Model_Relusersitems::find('all', array('where' => array(array('fk_users', $fk_users),)));
-	// 					$fk_items = Model_Relusersitems::find('all', array('where' => array(array('fk_items', $fk_items),)));
+
+
+//FUNCION BORRAR USUARIO POR ID (PARAMETROS REQUERIDOS: ID)----------------------------------------------------------------------
+
+	public function post_delete($id = null)
+	{
+		try
+		{
+			if($id != null)
+			{
+				if($this->check())
+				{
+					$compra = new Model_Relusersitems();
+					$compra = Model_Relusersitems::find('all', array('where' => array(array('id', $id),)));
 			
-	// 					foreach ($fk_items as $key)
-	// 					{
-	// 						$key -> delete();
-	// 						return $this->notice($code = 'SUCCESSFUL ACTION', $message = 'PURCHASE DELETED.');
-	// 					}
+						foreach ($compra as $key)
+						{
+							$key -> delete();
+							return $this->notice($code = 'SUCCESSFUL ACTION', $message = 'COMPRA DELETED.');
+						}
 
-	// 				else return $this->notice($code = 'ERROR', $message = 'ITEM NOT FOUND OR NOT BOUGHT.');
-	// 			}
-	// 			else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
-	// 		}
-	// 		else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_USER IN URL.');
-	// 	}
-	// 	else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_ITEM IN URL.');
-	// }
-	// 	catch(exception $e)
-	// 	{
-	// 		return $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
-	// 	}
-	// }   
+					if (!empty($compra))
+					{
+						return $compra;
+					}
+					else return $this->notice($code = 'ERROR', $message = 'COMPRA NOT FOUND OR DOES NOT EXIST.');
+				}
+				else return $this->notice($code = 'ERROR', $message = 'REQUIRE AUTHENTICATION.');
+			}
+			else return $this->notice($code = 'ERROR', $message = 'EXPECTED ID_COMPRA IN URL.');
+		}
+		catch(exception $e)
+		{
+			return $this->notice($code = 'ERROR', $message = 'INCORRECT AUTHENTICATION.');
+		}
+	}  
+
+
+
+
+
+
+
+
+
 
 
 }
