@@ -41,7 +41,7 @@ public function post_buy()
 
 
 
-//FUNCION BORRAR USUARIO POR ID (PARAMETROS REQUERIDOS: ID)----------------------------------------------------------------------
+//FUNCION BORRAR COMPRA POR ID (PARAMETROS REQUERIDOS: ID_COMPRA)----------------------------------------------------------------------
 
 	public function post_delete($id = null)
 	{
